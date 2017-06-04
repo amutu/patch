@@ -1,0 +1,133 @@
+diff --git a/ip4r--2.2.sql b/ip4r--2.2.sql
+index 8eb423d..3b3581d 100644
+--- a/ip4r--2.2.sql
++++ b/ip4r--2.2.sql
+@@ -446,41 +446,41 @@ CREATE FUNCTION ip4r_contained_by(ip4r,ip4r) RETURNS bool AS 'MODULE_PATHNAME' L
+ CREATE FUNCTION ip6r_contained_by(ip6r,ip6r) RETURNS bool AS 'MODULE_PATHNAME' LANGUAGE C IMMUTABLE STRICT;
+ CREATE FUNCTION iprange_contained_by(iprange,iprange) RETURNS bool AS 'MODULE_PATHNAME' LANGUAGE C IMMUTABLE STRICT;
+ 
+-CREATE OPERATOR <<= ( LEFTARG = ip4r,    RIGHTARG = ip4r,    PROCEDURE = ip4r_contained_by,    COMMUTATOR = '>>=', RESTRICT = contsel, JOIN = contjoinsel );
+-CREATE OPERATOR <<= ( LEFTARG = ip6r,    RIGHTARG = ip6r,    PROCEDURE = ip6r_contained_by,    COMMUTATOR = '>>=', RESTRICT = contsel, JOIN = contjoinsel );
+-CREATE OPERATOR <<= ( LEFTARG = iprange, RIGHTARG = iprange, PROCEDURE = iprange_contained_by, COMMUTATOR = '>>=', RESTRICT = contsel, JOIN = contjoinsel );
++CREATE OPERATOR <<= ( LEFTARG = ip4r,    RIGHTARG = ip4r,    PROCEDURE = ip4r_contained_by,    COMMUTATOR = '>>=', RESTRICT = ip4r_contsel, JOIN = ip4r_contjoinsel );
++CREATE OPERATOR <<= ( LEFTARG = ip6r,    RIGHTARG = ip6r,    PROCEDURE = ip6r_contained_by,    COMMUTATOR = '>>=', RESTRICT = ip4r_contsel, JOIN = ip4r_contjoinsel );
++CREATE OPERATOR <<= ( LEFTARG = iprange, RIGHTARG = iprange, PROCEDURE = iprange_contained_by, COMMUTATOR = '>>=', RESTRICT = ip4r_contsel, JOIN = ip4r_contjoinsel );
+ 
+ CREATE FUNCTION ip4r_contained_by_strict(ip4r,ip4r) RETURNS bool AS 'MODULE_PATHNAME' LANGUAGE C IMMUTABLE STRICT;
+ CREATE FUNCTION ip6r_contained_by_strict(ip6r,ip6r) RETURNS bool AS 'MODULE_PATHNAME' LANGUAGE C IMMUTABLE STRICT;
+ CREATE FUNCTION iprange_contained_by_strict(iprange,iprange) RETURNS bool AS 'MODULE_PATHNAME' LANGUAGE C IMMUTABLE STRICT;
+ 
+-CREATE OPERATOR << ( LEFTARG = ip4r,    RIGHTARG = ip4r,    PROCEDURE = ip4r_contained_by_strict,    COMMUTATOR = '>>', RESTRICT = contsel, JOIN = contjoinsel );
+-CREATE OPERATOR << ( LEFTARG = ip6r,    RIGHTARG = ip6r,    PROCEDURE = ip6r_contained_by_strict,    COMMUTATOR = '>>', RESTRICT = contsel, JOIN = contjoinsel );
+-CREATE OPERATOR << ( LEFTARG = iprange, RIGHTARG = iprange, PROCEDURE = iprange_contained_by_strict, COMMUTATOR = '>>', RESTRICT = contsel, JOIN = contjoinsel );
++CREATE OPERATOR << ( LEFTARG = ip4r,    RIGHTARG = ip4r,    PROCEDURE = ip4r_contained_by_strict,    COMMUTATOR = '>>', RESTRICT = ip4r_contsel, JOIN = ip4r_contjoinsel );
++CREATE OPERATOR << ( LEFTARG = ip6r,    RIGHTARG = ip6r,    PROCEDURE = ip6r_contained_by_strict,    COMMUTATOR = '>>', RESTRICT = ip4r_contsel, JOIN = ip4r_contjoinsel );
++CREATE OPERATOR << ( LEFTARG = iprange, RIGHTARG = iprange, PROCEDURE = iprange_contained_by_strict, COMMUTATOR = '>>', RESTRICT = ip4r_contsel, JOIN = ip4r_contjoinsel );
+ 
+ CREATE FUNCTION ip4r_contains(ip4r,ip4r) RETURNS bool AS 'MODULE_PATHNAME' LANGUAGE C IMMUTABLE STRICT;
+ CREATE FUNCTION ip6r_contains(ip6r,ip6r) RETURNS bool AS 'MODULE_PATHNAME' LANGUAGE C IMMUTABLE STRICT;
+ CREATE FUNCTION iprange_contains(iprange,iprange) RETURNS bool AS 'MODULE_PATHNAME' LANGUAGE C IMMUTABLE STRICT;
+ 
+-CREATE OPERATOR >>= ( LEFTARG = ip4r,    RIGHTARG = ip4r,    PROCEDURE = ip4r_contains,    COMMUTATOR = '<<=', RESTRICT = contsel, JOIN = contjoinsel );
+-CREATE OPERATOR >>= ( LEFTARG = ip6r,    RIGHTARG = ip6r,    PROCEDURE = ip6r_contains,    COMMUTATOR = '<<=', RESTRICT = contsel, JOIN = contjoinsel );
+-CREATE OPERATOR >>= ( LEFTARG = iprange, RIGHTARG = iprange, PROCEDURE = iprange_contains, COMMUTATOR = '<<=', RESTRICT = contsel, JOIN = contjoinsel );
++CREATE OPERATOR >>= ( LEFTARG = ip4r,    RIGHTARG = ip4r,    PROCEDURE = ip4r_contains,    COMMUTATOR = '<<=', RESTRICT = ip4r_contsel, JOIN = ip4r_contjoinsel );
++CREATE OPERATOR >>= ( LEFTARG = ip6r,    RIGHTARG = ip6r,    PROCEDURE = ip6r_contains,    COMMUTATOR = '<<=', RESTRICT = ip4r_contsel, JOIN = ip4r_contjoinsel );
++CREATE OPERATOR >>= ( LEFTARG = iprange, RIGHTARG = iprange, PROCEDURE = iprange_contains, COMMUTATOR = '<<=', RESTRICT = ip4r_contsel, JOIN = ip4r_contjoinsel );
+ 
+ CREATE FUNCTION ip4r_contains_strict(ip4r,ip4r) RETURNS bool AS 'MODULE_PATHNAME' LANGUAGE C IMMUTABLE STRICT;
+ CREATE FUNCTION ip6r_contains_strict(ip6r,ip6r) RETURNS bool AS 'MODULE_PATHNAME' LANGUAGE C IMMUTABLE STRICT;
+ CREATE FUNCTION iprange_contains_strict(iprange,iprange) RETURNS bool AS 'MODULE_PATHNAME' LANGUAGE C IMMUTABLE STRICT;
+ 
+-CREATE OPERATOR >> ( LEFTARG = ip4r,    RIGHTARG = ip4r,    PROCEDURE = ip4r_contains_strict,    COMMUTATOR = '<<', RESTRICT = contsel, JOIN = contjoinsel );
+-CREATE OPERATOR >> ( LEFTARG = ip6r,    RIGHTARG = ip6r,    PROCEDURE = ip6r_contains_strict,    COMMUTATOR = '<<', RESTRICT = contsel, JOIN = contjoinsel );
+-CREATE OPERATOR >> ( LEFTARG = iprange, RIGHTARG = iprange, PROCEDURE = iprange_contains_strict, COMMUTATOR = '<<', RESTRICT = contsel, JOIN = contjoinsel );
++CREATE OPERATOR >> ( LEFTARG = ip4r,    RIGHTARG = ip4r,    PROCEDURE = ip4r_contains_strict,    COMMUTATOR = '<<', RESTRICT = ip4r_contsel, JOIN = ip4r_contjoinsel );
++CREATE OPERATOR >> ( LEFTARG = ip6r,    RIGHTARG = ip6r,    PROCEDURE = ip6r_contains_strict,    COMMUTATOR = '<<', RESTRICT = ip4r_contsel, JOIN = ip4r_contjoinsel );
++CREATE OPERATOR >> ( LEFTARG = iprange, RIGHTARG = iprange, PROCEDURE = iprange_contains_strict, COMMUTATOR = '<<', RESTRICT = ip4r_contsel, JOIN = ip4r_contjoinsel );
+ 
+ CREATE FUNCTION ip4r_overlaps(ip4r,ip4r) RETURNS bool AS 'MODULE_PATHNAME' LANGUAGE C IMMUTABLE STRICT;
+ CREATE FUNCTION ip6r_overlaps(ip6r,ip6r) RETURNS bool AS 'MODULE_PATHNAME' LANGUAGE C IMMUTABLE STRICT;
+ CREATE FUNCTION iprange_overlaps(iprange,iprange) RETURNS bool AS 'MODULE_PATHNAME' LANGUAGE C IMMUTABLE STRICT;
+ 
+-CREATE OPERATOR && ( LEFTARG = ip4r,    RIGHTARG = ip4r,    PROCEDURE = ip4r_overlaps,    COMMUTATOR = '&&', RESTRICT = areasel, JOIN = areajoinsel );
+-CREATE OPERATOR && ( LEFTARG = ip6r,    RIGHTARG = ip6r,    PROCEDURE = ip6r_overlaps,    COMMUTATOR = '&&', RESTRICT = areasel, JOIN = areajoinsel );
+-CREATE OPERATOR && ( LEFTARG = iprange, RIGHTARG = iprange, PROCEDURE = iprange_overlaps, COMMUTATOR = '&&', RESTRICT = areasel, JOIN = areajoinsel );
++CREATE OPERATOR && ( LEFTARG = ip4r,    RIGHTARG = ip4r,    PROCEDURE = ip4r_overlaps,    COMMUTATOR = '&&', RESTRICT = ip4r_areasel, JOIN = ip4r_areajoinsel );
++CREATE OPERATOR && ( LEFTARG = ip6r,    RIGHTARG = ip6r,    PROCEDURE = ip6r_overlaps,    COMMUTATOR = '&&', RESTRICT = ip4r_areasel, JOIN = ip4r_areajoinsel );
++CREATE OPERATOR && ( LEFTARG = iprange, RIGHTARG = iprange, PROCEDURE = iprange_overlaps, COMMUTATOR = '&&', RESTRICT = ip4r_areasel, JOIN = ip4r_areajoinsel );
+ 
+ -- cross-type containment
+ -- no operators for these since they seem to do more harm than good. These cases
+@@ -686,6 +686,12 @@ CREATE OPERATOR CLASS hash_iprange_ops DEFAULT FOR TYPE iprange USING hash AS
+ -- ----------------------------------------------------------------------
+ -- GiST
+ 
++-- FUNCTIONS to replace PG internal values for the index loading patch (SORBS)
++CREATE FUNCTION ip4r_contsel(internal,oid,internal,integer) RETURNS double precision AS 'MODULE_PATHNAME' LANGUAGE 'C' STABLE;
++CREATE FUNCTION ip4r_contjoinsel(internal,oid,internal,smallint,internal) RETURNS double precision AS 'MODULE_PATHNAME' LANGUAGE 'C' STABLE;
++CREATE FUNCTION ip4r_areasel(internal,oid,internal,integer) RETURNS double precision AS 'MODULE_PATHNAME' LANGUAGE 'C' STABLE;
++CREATE FUNCTION ip4r_areajoinsel(internal,oid,internal,smallint,internal) RETURNS double precision AS 'MODULE_PATHNAME' LANGUAGE 'C' STABLE;
++
+ CREATE FUNCTION gip4r_consistent(internal,ip4r,int2,oid,internal) RETURNS bool AS 'MODULE_PATHNAME' LANGUAGE C;
+ CREATE FUNCTION gip4r_compress(internal) RETURNS internal  AS 'MODULE_PATHNAME' LANGUAGE C;
+ CREATE FUNCTION gip4r_decompress(internal) RETURNS internal  AS 'MODULE_PATHNAME' LANGUAGE C;
+diff --git a/ip4r.c b/ip4r.c
+index e8984c1..5f2394a 100644
+--- a/ip4r.c
++++ b/ip4r.c
+@@ -120,6 +120,38 @@ set_text_len(text *txt, int len)
+ 		SET_VARSIZE(txt, len + VARHDRSZ);
+ }
+ 
++ /*
+++** Patched static statistics to override contsel and contjoinsel etc..
+++*/
++
++PG_FUNCTION_INFO_V1(ip4r_contsel);
++Datum
++ip4r_contsel(PG_FUNCTION_ARGS)
++{
++    PG_RETURN_FLOAT8(0.000001);
++}
++
++PG_FUNCTION_INFO_V1(ip4r_contjoinsel);
++Datum
++ip4r_contjoinsel(PG_FUNCTION_ARGS)
++{
++    PG_RETURN_FLOAT8(0.000001);
++}
++
++PG_FUNCTION_INFO_V1(ip4r_areasel);
++Datum
++ip4r_areasel(PG_FUNCTION_ARGS)
++{
++    PG_RETURN_FLOAT8(0.000005);
++}
++
++PG_FUNCTION_INFO_V1(ip4r_areajoinsel);
++Datum
++ip4r_areajoinsel(PG_FUNCTION_ARGS)
++{
++    PG_RETURN_FLOAT8(0.000005);
++}
++
+ /*
+ ** Input/Output routines
+ */
+diff --git a/ipr.h b/ipr.h
+index 16c6728..c07a04f 100644
+--- a/ipr.h
++++ b/ipr.h
+@@ -230,6 +230,11 @@ Datum ip4_cmp(PG_FUNCTION_ARGS);
+ Datum ip4r_left_of(PG_FUNCTION_ARGS);
+ Datum ip4r_right_of(PG_FUNCTION_ARGS);
+ 
++Datum ip4r_contsel(PG_FUNCTION_ARGS);
++Datum ip4r_contjoinsel(PG_FUNCTION_ARGS);
++Datum ip4r_areasel(PG_FUNCTION_ARGS);
++Datum ip4r_areajoinsel(PG_FUNCTION_ARGS);
++
+ Datum ip6_in(PG_FUNCTION_ARGS);
+ Datum ip6_out(PG_FUNCTION_ARGS);
+ Datum ip6_recv(PG_FUNCTION_ARGS);
